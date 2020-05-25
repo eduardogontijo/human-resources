@@ -1,0 +1,58 @@
+<div>
+  <div class="row">
+    <div class="col">
+      <h1 id="tableLabel">Funcionários</h1>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col mb-2">
+      <button class="float-right btn btn-success">Adicionar</button>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col">
+      <p-table #dt [columns]="cols" [value]="employees" [paginator]="true" [rows]="10" styleClass="ui-table-employees">
+        <ng-template pTemplate="header" let-columns>
+          <tr>
+            <th *ngFor="let col of columns">
+              {{col.header}}
+            </th>
+          </tr>
+          <tr>
+            <th *ngFor="let col of columns" [ngSwitch]="col.field">
+              <input *ngIf="col.field != 'empty'" pInputText type="text"
+                (input)="dt.filter($event.target.value, col.field, 'contains')" class="ui-column-filter">
+            </th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-rowData let-columns="columns">
+          <tr>
+            <td *ngFor="let col of columns">
+              <span *ngIf="col.field != 'empty' && col.field != 'birthDate' && col.field != 'skills'"
+                style="vertical-align: middle; margin-left: .5em">{{resolveCellGrid(rowData, col.field)}}</span>
+
+              <span *ngIf="col.field == 'birthDate'"
+                style="vertical-align: middle; margin-left: .5em">{{rowData[col.field] | date: 'dd/MM/yyyy'}}</span>
+
+              <span *ngIf="col.field == 'skills'" style="vertical-align: middle; margin-left: .5em">
+                <li *ngFor="let skill of rowData.skills">{{skill.name}}</li>
+              </span>
+
+              <span *ngIf="col.field == 'empty'">
+                <button type="button" class="btn btn-primary mr-2">
+                  <i class="pi pi-pencil"></i>
+                </button>
+                <button type="button" class="btn btn-danger">
+                  <i class="pi pi-trash"></i>
+                </button>
+              </span>
+
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
+</div>
