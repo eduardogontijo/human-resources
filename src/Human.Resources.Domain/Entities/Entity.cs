@@ -10,7 +10,7 @@ namespace Human.Resources.Domain.Entities
             ValidationResult = new ValidationResult();
         }
 
-        public virtual int Id { get; set; }
+        public int Id { get; set; }
         public abstract bool IsValid();
         public ValidationResult ValidationResult { get; protected set; }
     }

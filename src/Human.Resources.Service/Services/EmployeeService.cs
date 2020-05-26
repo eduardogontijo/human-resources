@@ -4,6 +4,7 @@ using Human.Resources.Domain.Dtos;
 using Human.Resources.Domain.Entities;
 using Human.Resources.Domain.Interfaces;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Human.Resources.Service.Services
@@ -65,6 +66,20 @@ namespace Human.Resources.Service.Services
             }
 
             await _repository.Update(entity);
+            return entity;
+        }
+
+        public async Task<Employee> PutStatus(EmployeeDto employeeDto)
+        {
+            var entity = _mapper.Map<Employee>(employeeDto);
+
+            if (!entity.IsValid())
+            {
+                _notificationContext.AddNotifications(entity.ValidationResult);
+                return entity;
+            }
+
+            await _repository.UpdateStatus(entity);
             return entity;
         }
     }

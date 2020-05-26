@@ -1,4 +1,5 @@
 ﻿using Human.Resources.Domain.Validators;
+using System.Collections.Generic;
 
 namespace Human.Resources.Domain.Entities
 {
@@ -6,7 +7,7 @@ namespace Human.Resources.Domain.Entities
     {
         public string Name { get; set; }
 
-        public Employee Employee { get; set; }
+        public virtual IEnumerable<Employee> Employees { get; set; }
 
         public override bool IsValid()
         {

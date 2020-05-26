@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Human.Resources.Infra.Data.Migrations
 {
     [DbContext(typeof(HumanResourcesContext))]
-    [Migration("20200524133340_SeedGenderAndSkills")]
-    partial class SeedGenderAndSkills
+    [Migration("20200526021157_Tables")]
+    partial class Tables
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -40,6 +40,11 @@ namespace Human.Resources.Infra.Data.Migrations
                     b.Property<int>("GenderId")
                         .HasColumnType("int");
 
+                    b.Property<bool?>("IsActive")
+                        .IsRequired()
+                        .HasColumnName("IsActive")
+                        .HasColumnType("bit");
+
                     b.Property<string>("LastName")
                         .IsRequired()
                         .HasColumnName("LastName")
@@ -56,6 +61,18 @@ namespace Human.Resources.Infra.Data.Migrations
                         .IsUnique();
 
                     b.ToTable("Employees");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            BirthDate = new DateTime(1994, 8, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Email = "eduardo.ogontijo@gmail.com",
+                            GenderId = 1,
+                            IsActive = true,
+                            LastName = "Pereira",
+                            Name = "Eduardo Pereira"
+                        });
                 });
 
             modelBuilder.Entity("Human.Resources.Domain.Entities.EmployeeSkill", b =>
@@ -71,6 +88,18 @@ namespace Human.Resources.Infra.Data.Migrations
                     b.HasIndex("SkillId");
 
                     b.ToTable("EmployeeSkills");
+
+                    b.HasData(
+                        new
+                        {
+                            EmployeeId = 1,
+                            SkillId = 1
+                        },
+                        new
+                        {
+                            EmployeeId = 1,
+                            SkillId = 3
+                        });
                 });
 
             modelBuilder.Entity("Human.Resources.Domain.Entities.Gender", b =>

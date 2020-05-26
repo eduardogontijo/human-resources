@@ -9,14 +9,13 @@ namespace Human.Resources.Infra.Data.Mapping
     {
         public override void Map(EntityTypeBuilder<Gender> builder)
         {
-            builder.ToTable("Genders");
-
             builder.HasKey(c => c.Id);
 
             builder.Property(c => c.Name)
                 .IsRequired()
                 .HasColumnName("Name");
-            
+
+
             builder.HasData(
                 new Gender { Id = 1, Name = "Masculino" },
                 new Gender { Id = 2, Name = "Feminino" }

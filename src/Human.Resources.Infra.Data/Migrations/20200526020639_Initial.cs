@@ -43,6 +43,7 @@ namespace Human.Resources.Infra.Data.Migrations
                     LastName = table.Column<string>(nullable: false),
                     Email = table.Column<string>(nullable: false),
                     BirthDate = table.Column<DateTime>(nullable: false),
+                    IsActive = table.Column<bool>(nullable: false),
                     GenderId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
@@ -79,6 +80,42 @@ namespace Human.Resources.Infra.Data.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.InsertData(
+                table: "Genders",
+                columns: new[] { "Id", "Name" },
+                values: new object[,]
+                {
+                    { 1, "Masculino" },
+                    { 2, "Feminino" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Skills",
+                columns: new[] { "Id", "Name" },
+                values: new object[,]
+                {
+                    { 1, "C#" },
+                    { 2, "Java" },
+                    { 3, "Angular" },
+                    { 4, "SQL" },
+                    { 5, "ASP" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Employees",
+                columns: new[] { "Id", "BirthDate", "Email", "GenderId", "IsActive", "LastName", "Name" },
+                values: new object[] { 1, new DateTime(1994, 8, 20, 0, 0, 0, 0, DateTimeKind.Unspecified), "eduardo.ogontijo@gmail.com", 1, true, "Pereira", "Eduardo Pereira" });
+
+            migrationBuilder.InsertData(
+                table: "EmployeeSkills",
+                columns: new[] { "EmployeeId", "SkillId" },
+                values: new object[] { 1, 1 });
+
+            migrationBuilder.InsertData(
+                table: "EmployeeSkills",
+                columns: new[] { "EmployeeId", "SkillId" },
+                values: new object[] { 1, 3 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Employees_GenderId",

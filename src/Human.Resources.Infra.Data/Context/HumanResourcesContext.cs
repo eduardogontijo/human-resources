@@ -16,6 +16,8 @@ namespace Human.Resources.Infra.Data.Context
         public DbSet<Employee> Employees { get; set; }
         public DbSet<Skill> Skills { get; set; }
         public DbSet<Gender> Genders { get; set; }
+        public DbSet<EmployeeSkill> EmployeeSkills { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

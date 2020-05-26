@@ -9,8 +9,6 @@ namespace Human.Resources.Infra.Data.Mapping
     {
         public override void Map(EntityTypeBuilder<Skill> builder)
         {
-            builder.ToTable("Skills");
-
             builder.HasKey(c => c.Id);
 
             builder.Property(c => c.Name)

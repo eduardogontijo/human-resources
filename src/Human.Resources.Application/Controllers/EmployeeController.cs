@@ -44,6 +44,13 @@ namespace Human.Resources.Application.Controllers
             return Response(item);
         }
 
+        [HttpPut("status")]
+        public async Task<IActionResult> UpdateStatus([FromBody] EmployeeDto item)
+        {
+            await _service.PutStatus(item);
+            return Response(item);
+        }
+
         [HttpDelete]
         public IActionResult Delete(int id)
         {

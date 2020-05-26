@@ -1,7 +1,7 @@
 ﻿using Human.Resources.Domain.Validators;
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Human.Resources.Domain.Entities
 {
@@ -11,11 +11,12 @@ namespace Human.Resources.Domain.Entities
         public string LastName { get; set; }
         public string Email { get; set; }
         public DateTime BirthDate { get; set; }
+        public bool? IsActive { get; set; }
 
-        public int GenderId { get; set; }
-        public Gender Gender { get; set; }
+        public int? GenderId { get; set; }
+        public virtual Gender Gender { get; set; }
 
-        public IEnumerable<EmployeeSkill> EmployeeSkills { get; set; }
+        public virtual List<EmployeeSkill> EmployeeSkills { get; set; }
 
         public override bool IsValid()
         {
@@ -30,17 +31,6 @@ namespace Human.Resources.Domain.Entities
 
             // Validações adicionais.
 
-            ValidateGender();
-        }
-
-        private void ValidateGender()
-        {
-            if (Gender.IsValid()) return;
-
-            foreach (var error in Gender.ValidationResult.Errors)
-            {
-                ValidationResult.Errors.Add(error);
-            }
         }
     }
 }

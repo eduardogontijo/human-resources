@@ -10,25 +10,27 @@ namespace Human.Resources.Service.Automapper
         public DtoToEntityProfile()
         {
             CreateMap<EmployeeDto, Employee>()
+                .ForMember(entity => entity.GenderId, opt => opt.MapFrom(model => model.Gender.Id))
                 .ForMember(entity => entity.EmployeeSkills, opt => opt.MapFrom(model => model.Skills))
-                    .AfterMap((model, entity) =>
+                .ForMember(dest => dest.Gender, opt => opt.Ignore())
+                .AfterMap((model, entity) =>
+                {
+                    foreach (var employeeSkill in entity.EmployeeSkills)
                     {
-                        foreach (var employeeSkill in entity.EmployeeSkills)
-                        {
-                            employeeSkill.Employee = entity;
-                        }
-                    });
+                        employeeSkill.EmployeeId = entity.Id;
+                    }
+                });
 
-            CreateMap<GenderDto, Gender>()
-                .ForMember(g => g.Id,
-                   opt => opt.MapFrom(g => g.Id));
+            CreateMap<GenderDto, Gender>();
 
-            CreateMap<SkillDto, Skill>()
-                .ForMember(g => g.Id,
-                   opt => opt.MapFrom(g => g.Id));
+            CreateMap<SkillDto, Skill>();
 
             CreateMap<SkillDto, EmployeeSkill>()
-                .ForMember(entity => entity.Skill, opt => opt.MapFrom(model => model));
+                .ForMember(entity => entity.SkillId, opt => opt.MapFrom(model => model.Id));
+
+            CreateMap<EmployeeDto, EmployeeSkill>()
+            .ForMember(entity => entity.EmployeeId, opt => opt.MapFrom(model => model.Id));
+
         }
     }
 }

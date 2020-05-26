@@ -15,6 +15,12 @@ namespace Human.Resources.Infra.CrossCutting.IoC
             services.AddScoped<IEmployeeRepository, EmployeeRepository>();
             services.AddTransient<IEmployeeService, EmployeeService>();
 
+            services.AddScoped<ISkillRepository, SkillRepository>();
+            services.AddTransient<ISkillService, SkillService>();
+
+            services.AddScoped<IGenderRepository, GenderRepository>();
+            services.AddTransient<IGenderService, GenderService>();
+
             services.AddScoped<DomainNotification>();
             services.AddMvc(options => options.Filters.Add<NotificationFilter>())
            .SetCompatibilityVersion(CompatibilityVersion.Version_3_0);

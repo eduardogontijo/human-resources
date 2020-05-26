@@ -14,7 +14,7 @@ namespace Human.Resources.Service.Automapper
                 .ForMember(dto => dto.Skills, 
                     opt => opt.MapFrom(entity => entity.EmployeeSkills.Select(s => s.Skill).ToList()))
                 .ForMember(dto => dto.Name,
-                    opt => opt.MapFrom(entity => entity.Name + ' ' + entity.LastName))
+                    opt => opt.MapFrom(entity => entity.Name))
                 .ForMember(dto => dto.Age,
                     opt => opt.MapFrom(entity => DateTime.UtcNow.Year - entity.BirthDate.Year ));
 

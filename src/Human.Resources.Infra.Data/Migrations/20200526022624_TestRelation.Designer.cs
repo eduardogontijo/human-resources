@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Human.Resources.Infra.Data.Migrations
 {
     [DbContext(typeof(HumanResourcesContext))]
-    [Migration("20200524012538_Initial")]
-    partial class Initial
+    [Migration("20200526022624_TestRelation")]
+    partial class TestRelation
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -37,8 +37,13 @@ namespace Human.Resources.Infra.Data.Migrations
                         .HasColumnName("Email")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("GenderId")
+                    b.Property<int?>("GenderId")
                         .HasColumnType("int");
+
+                    b.Property<bool?>("IsActive")
+                        .IsRequired()
+                        .HasColumnName("IsActive")
+                        .HasColumnType("bit");
 
                     b.Property<string>("LastName")
                         .IsRequired()
@@ -52,10 +57,21 @@ namespace Human.Resources.Infra.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("GenderId")
-                        .IsUnique();
+                    b.HasIndex("GenderId");
 
                     b.ToTable("Employees");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            BirthDate = new DateTime(1994, 8, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Email = "eduardo.ogontijo@gmail.com",
+                            GenderId = 1,
+                            IsActive = true,
+                            LastName = "Pereira",
+                            Name = "Eduardo Pereira"
+                        });
                 });
 
             modelBuilder.Entity("Human.Resources.Domain.Entities.EmployeeSkill", b =>
@@ -71,6 +87,18 @@ namespace Human.Resources.Infra.Data.Migrations
                     b.HasIndex("SkillId");
 
                     b.ToTable("EmployeeSkills");
+
+                    b.HasData(
+                        new
+                        {
+                            EmployeeId = 1,
+                            SkillId = 1
+                        },
+                        new
+                        {
+                            EmployeeId = 1,
+                            SkillId = 3
+                        });
                 });
 
             modelBuilder.Entity("Human.Resources.Domain.Entities.Gender", b =>
@@ -88,6 +116,18 @@ namespace Human.Resources.Infra.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Genders");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Masculino"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Feminino"
+                        });
                 });
 
             modelBuilder.Entity("Human.Resources.Domain.Entities.Skill", b =>
@@ -105,15 +145,40 @@ namespace Human.Resources.Infra.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Skills");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "C#"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Java"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "Angular"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Name = "SQL"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Name = "ASP"
+                        });
                 });
 
             modelBuilder.Entity("Human.Resources.Domain.Entities.Employee", b =>
                 {
                     b.HasOne("Human.Resources.Domain.Entities.Gender", "Gender")
-                        .WithOne("Employee")
-                        .HasForeignKey("Human.Resources.Domain.Entities.Employee", "GenderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .WithMany("Employees")
+                        .HasForeignKey("GenderId");
                 });
 
             modelBuilder.Entity("Human.Resources.Domain.Entities.EmployeeSkill", b =>

@@ -4,14 +4,16 @@ using Human.Resources.Infra.Data.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Human.Resources.Infra.Data.Migrations
 {
     [DbContext(typeof(HumanResourcesContext))]
-    partial class HumanResourcesContextModelSnapshot : ModelSnapshot
+    [Migration("20200526020639_Initial")]
+    partial class Initial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -35,7 +37,7 @@ namespace Human.Resources.Infra.Data.Migrations
                         .HasColumnName("Email")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("GenderId")
+                    b.Property<int>("GenderId")
                         .HasColumnType("int");
 
                     b.Property<bool?>("IsActive")
@@ -55,7 +57,8 @@ namespace Human.Resources.Infra.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("GenderId");
+                    b.HasIndex("GenderId")
+                        .IsUnique();
 
                     b.ToTable("Employees");
 
@@ -175,8 +178,10 @@ namespace Human.Resources.Infra.Data.Migrations
             modelBuilder.Entity("Human.Resources.Domain.Entities.Employee", b =>
                 {
                     b.HasOne("Human.Resources.Domain.Entities.Gender", "Gender")
-                        .WithMany("Employees")
-                        .HasForeignKey("GenderId");
+                        .WithOne("Employee")
+                        .HasForeignKey("Human.Resources.Domain.Entities.Employee", "GenderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Human.Resources.Domain.Entities.EmployeeSkill", b =>

@@ -9,17 +9,31 @@ namespace Human.Resources.Infra.Data.Mapping
     {
         public override void Map(EntityTypeBuilder<EmployeeSkill> builder)
         {
-            builder.ToTable("EmployeeSkills");
+            builder.HasKey(bc => new { bc.EmployeeId, bc.SkillId });
 
-            builder.HasKey(t => new { t.EmployeeId, t.SkillId });
+            builder
+                .HasOne(bc => bc.Employee)
+                .WithMany(b => b.EmployeeSkills)
+                .HasForeignKey(bc => bc.EmployeeId);
 
-            builder.HasOne(pt => pt.Employee)
-                .WithMany(p => p.EmployeeSkills)
-                .HasForeignKey(pt => pt.EmployeeId);
+            builder
+                .HasOne(bc => bc.Skill)
+                .WithMany(c => c.EmployeeSkills)
+                .HasForeignKey(bc => bc.SkillId);
 
-            builder.HasOne(pt => pt.Skill)
-                .WithMany(t => t.EmployeeSkills)
-                .HasForeignKey(pt => pt.SkillId);
+
+            builder.HasData(
+               new EmployeeSkill
+               {
+                   EmployeeId = 1,
+                   SkillId = 1
+               },
+                new EmployeeSkill
+                {
+                    EmployeeId = 1,
+                    SkillId = 3
+                }
+            );
         }
     }
 }

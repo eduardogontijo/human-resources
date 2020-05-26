@@ -2,6 +2,7 @@
 using Human.Resources.Infra.Data.Extensions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using System;
 
 namespace Human.Resources.Infra.Data.Mapping
 {
@@ -9,8 +10,6 @@ namespace Human.Resources.Infra.Data.Mapping
     {
         public override void Map(EntityTypeBuilder<Employee> builder)
         {
-            builder.ToTable("Employees");
-
             builder.HasKey(c => c.Id);
 
             builder.Property(c => c.Name)
@@ -29,9 +28,26 @@ namespace Human.Resources.Infra.Data.Mapping
                 .IsRequired()
                 .HasColumnName("BirthDate");
 
-            builder.HasOne(c => c.Gender)
-                .WithOne(s => s.Employee)
-                .HasForeignKey<Employee>(ad => ad.GenderId);
+            builder.Property(c => c.IsActive)
+                .IsRequired()
+                .HasColumnName("IsActive");
+
+            builder
+                .HasOne(c => c.Gender)
+                .WithMany(s => s.Employees);
+
+            builder.HasData(
+               new Employee
+               {
+                   Id = 1,
+                   Name = "Eduardo Pereira",
+                   LastName = "Pereira",
+                   Email = "eduardo.ogontijo@gmail.com",
+                   BirthDate = new DateTime(1994, 8, 20, 0, 0, 0),
+                   GenderId = 1,
+                   IsActive = true
+               }
+            );
 
             builder.Ignore(e => e.ValidationResult);
 

@@ -12,8 +12,11 @@ namespace Human.Resources.Domain.Dtos
         public string LastName { get; set; }
         public string Email { get; set; }
         public int Age { get; set; }
+        public bool IsActive { get; set; }
         public DateTime BirthDate { get; set; }
+        public int GenderId { get; set; }
         public GenderDto Gender { get; set; }
+
         public IEnumerable<SkillDto> Skills { get; set; }
     }
 }

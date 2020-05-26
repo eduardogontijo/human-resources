@@ -11,6 +11,7 @@ namespace Human.Resources.Domain.Interfaces
         Task<EmployeeDto> GetById(int id);
         Task<Employee> Post(EmployeeDto obj);
         Task<Employee> Put(EmployeeDto obj);
+        Task<Employee> PutStatus(EmployeeDto obj);
         void Delete(int id);
     }
 }
