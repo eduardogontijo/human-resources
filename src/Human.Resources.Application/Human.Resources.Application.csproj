@@ -35,10 +35,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Extensions\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\Human.Resources.Domain.Core\Human.Resources.Domain.Core.csproj" />
     <ProjectReference Include="..\Human.Resources.Domain\Human.Resources.Domain.csproj" />
     <ProjectReference Include="..\Human.Resources.Infra.CrossCutting\Human.Resources.Infra.CrossCutting.IoC.csproj" />

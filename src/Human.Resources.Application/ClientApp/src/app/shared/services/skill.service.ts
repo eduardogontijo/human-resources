@@ -10,7 +10,7 @@ export class SkillService extends BaseService<SkillModel, SkillModel> {
     public http: HttpClient
   ) {
     super(http);
-    this.endpoint = 'skill';
+    this.endpoint = 'api/skill';
   }
 
   get(): Observable<any> {

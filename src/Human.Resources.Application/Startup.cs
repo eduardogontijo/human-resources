@@ -1,7 +1,7 @@
 using Human.Resources.Application.Extensions;
+using Human.Resources.Domain.Core.Middlewares;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -59,6 +59,8 @@ namespace Human.Resources.Application
             }
 
             app.UseRouting();
+
+            app.ConfigureCustomExceptionMiddleware();
 
             app.UseEndpoints(endpoints =>
             {

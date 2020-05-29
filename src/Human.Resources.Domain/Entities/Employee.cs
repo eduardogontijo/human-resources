@@ -14,9 +14,9 @@ namespace Human.Resources.Domain.Entities
         public bool? IsActive { get; set; }
 
         public int? GenderId { get; set; }
-        public virtual Gender Gender { get; set; }
+        public Gender Gender { get; set; }
 
-        public virtual List<EmployeeSkill> EmployeeSkills { get; set; }
+        public List<EmployeeSkill> EmployeeSkills { get; set; }
 
         public override bool IsValid()
         {

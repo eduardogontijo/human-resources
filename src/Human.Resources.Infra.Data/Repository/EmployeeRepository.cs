@@ -17,49 +17,53 @@ namespace Human.Resources.Infra.Data.Repository
 
         public virtual async Task<bool> UpdateStatus(Employee obj)
         {
-            _context.Entry(obj).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+            _context.Attach(obj);
+            _context.Entry(obj).Property("IsActive").IsModified = true;
+
             return await _context.SaveChangesAsync() > 0;
         }
 
         public override async Task<bool> Update(Employee obj)
         {
             var employeeSkills = _context.EmployeeSkills.Where(_ => _.EmployeeId == obj.Id).ToList();
-            _context.EmployeeSkills.RemoveRange(employeeSkills);
-            await _context.SaveChangesAsync();
 
-            _context.Entry(obj).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+            _context.EmployeeSkills.RemoveRange(employeeSkills);
             _context.EmployeeSkills.AddRange(obj.EmployeeSkills);
+            _context.Entry(obj).State = EntityState.Modified;
+
             return await _context.SaveChangesAsync() > 0;
         }
 
         public override async Task<IList<Employee>> GetAll()
         {
-            return await _dbSet.Select(e => new Employee
-            {
-                Id = e.Id,
-                Name = e.Name,
-                LastName = e.LastName,
-                Email = e.Email,
-                BirthDate = e.BirthDate,
-                Gender = e.Gender,
-                IsActive = e.IsActive,
-                EmployeeSkills = e.EmployeeSkills.Select(s => new EmployeeSkill { Skill = s.Skill}).ToList()
-            }).ToListAsync();
+            return await _dbSet.AsNoTracking()
+                .Select(e => new Employee
+                {
+                    Id = e.Id,
+                    Name = e.Name,
+                    LastName = e.LastName,
+                    Email = e.Email,
+                    BirthDate = e.BirthDate,
+                    Gender = e.Gender,
+                    IsActive = e.IsActive,
+                    EmployeeSkills = e.EmployeeSkills.Select(s => new EmployeeSkill { Skill = s.Skill }).ToList()
+                }).ToListAsync();
         }
 
         public override async Task<Employee> GetById(int id)
         {
-            return await _dbSet.Select(e => new Employee
-            {
-                Id = e.Id,
-                Name = e.Name,
-                LastName = e.LastName,
-                Email = e.Email,
-                BirthDate = e.BirthDate,
-                Gender = e.Gender,
-                IsActive = e.IsActive,
-                EmployeeSkills = e.EmployeeSkills.Select(s => new EmployeeSkill { Skill = s.Skill }).ToList()
-            }).Where(w => w.Id == id).FirstOrDefaultAsync();
+            return await _dbSet.AsNoTracking()
+                .Select(e => new Employee
+                {
+                    Id = e.Id,
+                    Name = e.Name,
+                    LastName = e.LastName,
+                    Email = e.Email,
+                    BirthDate = e.BirthDate,
+                    Gender = e.Gender,
+                    IsActive = e.IsActive,
+                    EmployeeSkills = e.EmployeeSkills.Select(s => new EmployeeSkill { Skill = s.Skill }).ToList()
+                }).Where(w => w.Id == id).FirstOrDefaultAsync();
         }
     }
 }

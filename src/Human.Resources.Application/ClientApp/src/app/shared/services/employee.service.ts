@@ -11,7 +11,7 @@ export class EmployeeService extends BaseService<EmployeeModel, EmployeeModel> {
     public http: HttpClient
   ) {
     super(http);
-    this.endpoint = 'employee';
+    this.endpoint = 'api/employee';
   }
 
   get(): Observable<any> {

@@ -7,7 +7,7 @@ namespace Human.Resources.Domain.Entities
     {
         public string Name { get; set; }
 
-        public virtual IEnumerable<EmployeeSkill> EmployeeSkills { get; set; }
+        public IEnumerable<EmployeeSkill> EmployeeSkills { get; set; }
 
         public override bool IsValid()
         {

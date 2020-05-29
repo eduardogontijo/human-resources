@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Human.Resources.Application.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class EmployeeController : ApiController
     {
         private readonly IEmployeeService _service;

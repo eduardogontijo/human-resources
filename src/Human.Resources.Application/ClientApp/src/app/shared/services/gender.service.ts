@@ -11,7 +11,7 @@ export class GenderService extends BaseService<GenderModel, GenderModel> {
     public http: HttpClient
   ) {
     super(http);
-    this.endpoint = 'gender';
+    this.endpoint = 'api/gender';
   }
 
   get(): Observable<any> {
