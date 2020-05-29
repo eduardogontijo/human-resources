@@ -71,11 +71,9 @@ export class EmployeeComponent implements OnInit {
     this.employeeService.putStatus(employee)
       .subscribe(result => {
         this.loading = false;
-        debugger
         if (result.success) {
         }
       }, error => {
-        debugger
         this.loading = false;
         console.error(error);
       });

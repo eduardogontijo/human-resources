@@ -13,7 +13,7 @@ namespace Human.Resources.Domain.Entities
         public DateTime BirthDate { get; set; }
         public bool? IsActive { get; set; }
 
-        public int? GenderId { get; set; }
+        public int GenderId { get; set; }
         public Gender Gender { get; set; }
 
         public List<EmployeeSkill> EmployeeSkills { get; set; }
