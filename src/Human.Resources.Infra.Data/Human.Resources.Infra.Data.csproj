@@ -31,9 +31,7 @@
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="3.1.4" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Extensions\" />
-  </ItemGroup>
-  <ItemGroup>
+    <ProjectReference Include="..\Human.Resources.Domain.Core\Human.Resources.Domain.Core.csproj" />
     <ProjectReference Include="..\Human.Resources.Domain\Human.Resources.Domain.csproj" />
   </ItemGroup>
 

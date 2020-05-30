@@ -22,7 +22,7 @@ namespace Human.Resources.Service.Automapper
                 });
 
             CreateMap<GenderDto, Gender>();
-
+            
             CreateMap<SkillDto, Skill>();
 
             CreateMap<SkillDto, EmployeeSkill>()

@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Human.Resources.Domain.Core.Notification;
+using Human.Resources.Domain.Core.Pagination;
 using Human.Resources.Domain.Dtos;
 using Human.Resources.Domain.Interfaces;
 using Microsoft.AspNetCore.Mvc;
@@ -16,6 +17,12 @@ namespace Human.Resources.Application.Controllers
             : base(notification)
         {
             _service = service;
+        }
+
+        [HttpGet("paged")]
+        public async Task<IActionResult> GetPaged([FromQuery] PagingParams pagingParams)
+        {
+            return Response(await _service.GetPagedEmployee(pagingParams));
         }
 
         [HttpGet]

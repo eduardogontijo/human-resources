@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
 using Human.Resources.Domain.Core.Notification;
+using Human.Resources.Domain.Core.Pagination;
 using Human.Resources.Domain.Dtos;
 using Human.Resources.Domain.Entities;
 using Human.Resources.Domain.Interfaces;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -15,16 +17,22 @@ namespace Human.Resources.Service.Services
         private readonly DomainNotification _notificationContext;
         private IMapper _mapper;
 
-        public EmployeeService(IEmployeeRepository repository, DomainNotification notificationContext, IMapper mapper) 
+        public EmployeeService(IEmployeeRepository repository, DomainNotification notificationContext, IMapper mapper)
         {
             _repository = repository;
             _notificationContext = notificationContext;
             _mapper = mapper;
         }
 
-        public void Delete(int id)
+        public async Task<PagedList<EmployeeDto>> GetPagedEmployee(IPagingParams pagingParams)
         {
-            _repository.Remove(id);
+            var entity = await _repository.GetPagedEmployee(pagingParams);
+
+            return new PagedList<EmployeeDto>(
+                entity.PageItems.Select(_ => _mapper.Map<EmployeeDto>(_)).ToList(),
+                entity.TotalItems,
+                pagingParams
+                );
         }
 
         public async Task<IList<EmployeeDto>> GetAll()
@@ -81,6 +89,11 @@ namespace Human.Resources.Service.Services
 
             await _repository.UpdateStatus(entity);
             return entity;
+        }
+
+        public void Delete(int id)
+        {
+            _repository.Remove(id);
         }
     }
 }
